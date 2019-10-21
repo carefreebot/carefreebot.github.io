@@ -1,153 +1,42 @@
-<html lang="en">
-<head>
-<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<title>Playground · yve-bot</title>
-<meta name="viewport" content="width=device-width"/>
-<meta name="generator" content="Docusaurus"/>
-<meta property="og:title" content="Playground · yve-bot"/>
-<meta property="og:type" content="website"/>
-<meta property="og:url" content="https://andersonba.github.io/yve-bot/yve-bot/index.html"/>
-<meta property="og:description" content="Edit the rules in left box and click on Play button to reload the chat."/>
-<link rel="shortcut icon" href="https://andersonba.github.io/yve-bot/img/favicon.png"/>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/>
-<script type="text/javascript" src="https://buttons.github.io/buttons.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/yve-bot@latest/web.js"></script>
-<script type="text/javascript" src="https://andersonba.github.io/yve-bot/js/chat.js"></script>
-<link rel="stylesheet" href="https://andersonba.github.io/yve-bot/css/main.css"/>
-</head>
-<body class="sideNavVisible">
-<div class="navPusher">
-<div class="docMainWrapper wrapper">
-<div class="container mainContainer">
-<div class="wrapper">
-<div class="post">
-<header class="postHeader"><h1>Playground</h1></header>
-<article>
-<div>
-<span><p>Edit the rules in left box and click on Play button to reload the chat.</p>
-<div class="Playground">
-<div class="Playground-editor">
-<textarea id="editor">
-- message: 你好，我是青松掌门。你叫什么名字？
-  name: name
-  type: String
-  replyMessage: 谢谢你， {name}！
-
-- message: 今天我们要聊聊吗？
-  type: SingleChoice
-  options:
-    - label: 来，聊啊
-      next: chat
-    - label: 不要，别烦我
-      next: nochat
-
-- message: 你现在干嘛呢～
-  name: chat
-  type: String
-
-- message: 那你现在心情咋样啊老铁
-  type: SingleChoice
-  options:
-    - label: 还行吧，正常
-      next: restart
-    - label: 很低落啊老铁
-    - label: High着呢
-      next: high
-
-- message: 可怜了老铁，抱抱。我想象啊。想要我给你推荐一部电影放松一下吗？还是想我陪你聊会天。
-  type: SingleChoice
-  options:
-    - label: 聊聊吧
-    - label: 推荐电影
-      next: restart
-
-- message: 啥原因让你不开心啊，和我说说，咱俩的对话天知地知你知我知
-  type: String
-
-- message: 恩，我能理解这件事情让你感到难过了。你觉得低落的原因是因为觉得自己没做好吗？
-  type: SingleChoice
-  options:
-    - label: 是的
-      next: yes
-    - label: 不是
-      next: no
-
-- message: 明白。有时候我们总是会对自己很苛刻。或许我可以帮你再把这个想法分析一下，看看你会不会好受点。
-  name: yes
-  type: SingleChoice
-  options:
-    - label: 好的，开始吧
-      next: restart
-    - label: 我想静一静，以后再说吧
-      next: movie
-
-- message: 那是你对其他人或者整个事情失望了吗？
-  name: no
-  next: restart
-
-- message: 好的，这部电影可能适合你现在的心情哦，你可以看一下。记得我随时在你身边。
-  name: movie
-  next: restart
-
-- message: 我欲乘风归去，又恐琼楼玉宇，高处不胜寒。老衲去也！
-  name: nochat
-  next: restart
-
-- message: 要不要来电死亡金属乐，我们一起rock起来！
-  name: high
-  next: restart
-
-- message: 这部分还有待开发，重新开始？
-  type: SingleChoice
-  name: restart
-  options:
-    - label: 重新开始
-      next: name
-    - label: 退出
-      next: exit
-
-- name: exit
-  exit: true
-</textarea>
-<a class="Playground-play" href="javascript:playChat();" title="Play chat">
-<img src="data:image/png;base64,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" alt="play" />
-</a>
-</div>
-<div class="Playground-preview">
-<div class="Playground-chat"></div>
-</div>
-</div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.31.0/lib/codemirror.css">
-<script src="https://cdn.jsdelivr.net/npm/codemirror@5.31.0/lib/codemirror.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/codemirror@5.31.0/mode/yaml/yaml.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/esprima/2.7.3/esprima.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.9.1/js-yaml.min.js"></script>
-<script>
-  var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
-    mode: 'yaml',
-    tabSize: 2,
-  });
-  YveBot.actions.define('highlightPlay', function() {
-    var icon = document.querySelector('.Playground-play');
-    icon.classList.add('highlight');
-    setTimeout(function() {
-      icon.classList.remove('highlight');
-    }, 1000);
-  });
-  function playChat() {
-    document.querySelector('.Playground-chat').innerHTML = '';
-    var rules = editor.getValue();
-    new YveBot(jsyaml.load(rules), { target: '.Playground-chat' }).start();
-  }
-  playChat();
-</script>
-</span>
-</div>
-</article>
-</div>
-</div>
-</div>
-</div>
-</div>
-</body>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<title>yve-bot · Smart rule-based bot. For Browser &amp; Node.</title>
+		<meta name="viewport" content="width=device-width"/>
+		<meta name="generator" content="Docusaurus"/>
+		<meta property="og:title" content="yve-bot · Smart rule-based bot. For Browser &amp; Node."/>
+		<meta property="og:type" content="website"/>
+		<meta property="og:url" content="https://andersonba.github.io/yve-bot/yve-bot/index.html"/>
+		<meta property="og:description" content="Smart rule-based bot. For Browser &amp; Node."/>
+		<link rel="shortcut icon" href="https://andersonba.github.io/yve-bot/img/favicon.png"/>
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/>
+		<script type="text/javascript" src="https://buttons.github.io/buttons.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/yve-bot@latest/web.js"></script>
+		<script type="text/javascript" src="/chat.js"></script>
+		<link rel="stylesheet" href="https://andersonba.github.io/yve-bot/css/main.css"/>
+	</head>
+	<body>
+		<div class="navPusher">
+			<div>
+				<div class="homeContainer">
+					<div class="homeSplashFade">
+						<div class="wrapper homeWrapper">
+							<div class="inner">
+								<h2 class="projectTitle">
+									<img class="Logo" src="https://andersonba.github.io/yve-bot/img/logo-white.png" alt="yve-bot"/>
+									<small>Smart rule-based bot. For Browser &amp; Node.</small>
+								</h2>
+								<div class="Chat">
+									<div class="Chat-loading">
+										<img src="https://andersonba.github.io/yve-bot/img/loading.gif" alt="loading chat"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
